@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Place:</strong>
+  <%= @thing.place_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @thing.name %>
+</p>
+
+<p>
+  <strong>Clean day:</strong>
+  <%= @thing.clean_day %>
+</p>
+
+<p>
+  <strong>Clean frequency:</strong>
+  <%= @thing.clean_frequency %>
+</p>
+
+<p>
+  <strong>Remarks:</strong>
+  <%= @thing.remarks %>
+</p>
+
+<%= link_to 'Edit', edit_thing_path(@thing) %> |
+<%= link_to 'Back', things_path %>
