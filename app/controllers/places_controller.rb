@@ -1,15 +1,18 @@
 class PlacesController < ApplicationController
   before_action :set_place, only: [:show, :edit, :update, :destroy]
+  before_action :require_user_logged_in, only: [:index, :edit]
 
   # GET /places
   # GET /places.json
   def index
-    @places = Place.all
+    @places = current_user.places
   end
 
   # GET /places/1
   # GET /places/1.json
   def show
+    @place = current_user.places.find(params[:id])
+    @things = current_user.places.find(params[:id]).things
   end
 
   # GET /places/new
@@ -24,41 +27,39 @@ class PlacesController < ApplicationController
   # POST /places
   # POST /places.json
   def create
-    @place = Place.new(place_params)
-
-    respond_to do |format|
-      if @place.save
-        format.html { redirect_to @place, notice: 'Place was successfully created.' }
-        format.json { render :show, status: :created, location: @place }
-      else
-        format.html { render :new }
-        format.json { render json: @place.errors, status: :unprocessable_entity }
-      end
+    @place = current_user.places.build(place_params)
+    if @place.save
+      flash[:success] = '場所を追加しました。'
+      redirect_to places_path
+    else
+      @microposts = current_user.places
+      flash.now[:danger] = '場所の追加に失敗しました。'
+      render 'places/index'
     end
   end
 
   # PATCH/PUT /places/1
   # PATCH/PUT /places/1.json
   def update
-    respond_to do |format|
-      if @place.update(place_params)
-        format.html { redirect_to @place, notice: 'Place was successfully updated.' }
-        format.json { render :show, status: :ok, location: @place }
-      else
-        format.html { render :edit }
-        format.json { render json: @place.errors, status: :unprocessable_entity }
-      end
+    @place = Place.find(params[:id])
+
+    if @place.update(place_params)
+      flash[:success] = '場所の名称を変更しました'
+      redirect_to places_path
+    else
+      flash.now[:danger] = '場所の名称は変更されませんでした'
+      render :edit
     end
   end
 
   # DELETE /places/1
   # DELETE /places/1.json
   def destroy
+    @place = Place.find(params[:id])
     @place.destroy
-    respond_to do |format|
-      format.html { redirect_to places_url, notice: 'Place was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+    flash[:success] = '場所は正常に削除されました'
+    redirect_to places_url
   end
 
   private
@@ -69,6 +70,6 @@ class PlacesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.require(:place).permit(:user_id, :id, :name)
+      params.permit(:name)
     end
 end

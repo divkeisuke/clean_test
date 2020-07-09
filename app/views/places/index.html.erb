@@ -1,31 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Places</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Id</th>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @places.each do |place| %>
+<h1>場所一覧</h1>
+<div class="container">
+  <table class="table">
+      <% @places.each do |place| %>
       <tr>
-        <td><%= place.user_id %></td>
-        <td><%= place.id %></td>
-        <td><%= place.name %></td>
-        <td><%= link_to 'Show', place %></td>
-        <td><%= link_to 'Edit', edit_place_path(place) %></td>
-        <td><%= link_to 'Destroy', place, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to place.name, place_path(place),class: "btn btn-outline-primary" %></td>
+        <td><%= link_to '名称変更', edit_place_path(place),class: "btn btn-outline-dark" %></td>
+        <td><%= link_to '削除', place, method: :delete, data: { confirm: '本当に削除しますか?' },class:"btn btn-outline-dark" %></td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
+      <% end %>
+  </table>
+</div>
 <br>
 
-<%= link_to 'New Place', new_place_path %>
+<%= form_with(model: @place,local: true) do |f| %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.text_field :name,placeholder: "＋場所",class: "form-control" %>
+      </div>
+      <div class="col-sm-offset-2 col-sm-1">
+        <%= f.submit '登録', class: 'btn btn-primary btn-block' %>
+      </div>
+    </div>
+<% end %>

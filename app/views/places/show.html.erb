@@ -1,19 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @place.user_id %>
-</p>
+<h1><%= @place.name %>のモノ一覧</h1>
 
-<p>
-  <strong>Id:</strong>
-  <%= @place.id %>
-</p>
+<div class="container">
+  <table class="table">
+    <% @things.each do |thing| %>
+      <tr>
+        <td><%= link_to thing.name,thing_path(thing),class: "btn btn-outline-primary" %></td>
+        <td><%= link_to '編集', edit_thing_path(thing),class: "btn btn-outline-dark" %></td>
+        <td><%= link_to '削除', thing, method: :delete, data: { confirm: '本当に削除しますか?' },class:"btn btn-outline-dark" %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>  
+<br>
 
-<p>
-  <strong>Name:</strong>
-  <%= @place.name %>
-</p>
-
-<%= link_to 'Edit', edit_place_path(@place) %> |
-<%= link_to 'Back', places_path %>
+<%= link_to '新しくモノを登録する', new_thing_path,class: "btn btn-outline-success" %>
