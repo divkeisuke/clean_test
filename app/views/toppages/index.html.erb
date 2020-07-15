@@ -1,5 +1,14 @@
 <% if logged_in? %>
-
+  <tbody>
+    <% @things.each do |thing| %>
+      <tr>
+        <td><%= thing.place_id %></td>
+        <td><%= thing.name %></td>
+        <td><%= thing.clean_day %></td>
+        <td><%= thing.clean_frequency %></td>
+        <td><%= thing.remarks %></td>
+    <% end %>
+  </tbody>
 <p>
   <strong>Name:</strong>
   <%= @user.name %>

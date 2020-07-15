@@ -10,7 +10,18 @@ Rails.application.routes.draw do
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
   
-  resources :places, only: [:index, :show, :create, :edit, :destroy, :update]
-  resources :things, only: [:index, :show, :new, :edit, :destroy, :update]
+
+  resources :places, only: [:index, :show, :create, :edit, :destroy, :update] do
+    member do
+      get "things/new"
+      post "things/new", to: "things#create"
+      get "things/edit"
+      patch "things/edit", to: "things#update"
+      put "things/edit", to: "things#update"
+    end
+  end
+  
+  
+  resources :things, only: [:index, :show, :destroy]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

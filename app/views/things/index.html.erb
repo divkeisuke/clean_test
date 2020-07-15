@@ -1,35 +1,15 @@
-<p id="notice"><%= notice %></p>
+<h1>ユーザーのモノ一覧</h1>
 
-<h1>@placeのモノ一覧</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Place</th>
-      <th>Name</th>
-      <th>Clean day</th>
-      <th>Clean frequency</th>
-      <th>Remarks</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="container">
+  <table class="table">
     <% @things.each do |thing| %>
       <tr>
-        <td><%= thing.place_id %></td>
-        <td><%= thing.name %></td>
-        <td><%= thing.clean_day %></td>
-        <td><%= thing.clean_frequency %></td>
-        <td><%= thing.remarks %></td>
-        <td><%= link_to 'Show', thing %></td>
-        <td><%= link_to 'Edit', edit_thing_path(thing) %></td>
-        <td><%= link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to thing.name,thing_path(thing),class: "btn btn-outline-primary" %></td>
+        <td><%= link_to '編集', things_edit_place_path(thing),class: "btn btn-outline-dark" %></td>
+        <td><%= link_to '削除', thing_path(thing), method: :delete, data: { confirm: '本当に削除しますか?' },class:"btn btn-outline-dark" %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
-
+  </table>
+</div>  
 <br>
 
-<%= link_to 'New Thing', new_thing_path %>

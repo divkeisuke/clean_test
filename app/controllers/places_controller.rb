@@ -1,6 +1,6 @@
 class PlacesController < ApplicationController
-  before_action :set_place, only: [:show, :edit, :update, :destroy]
-  before_action :require_user_logged_in, only: [:index, :edit]
+  before_action :set_place, only: [ :edit, :update, :destroy]
+  before_action :require_user_logged_in, only: [:index, :show, :new, :edit]
 
   # GET /places
   # GET /places.json
@@ -55,21 +55,20 @@ class PlacesController < ApplicationController
   # DELETE /places/1
   # DELETE /places/1.json
   def destroy
-    @place = Place.find(params[:id])
     @place.destroy
 
-    flash[:success] = '場所は正常に削除されました'
+    flash[:success] = '場所を削除しました'
     redirect_to places_url
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_place
-      @place = Place.find(params[:id])
+      @place = current_user.places.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def place_params
-      params.permit(:name)
+      params.permit(:name,:place_id)
     end
 end

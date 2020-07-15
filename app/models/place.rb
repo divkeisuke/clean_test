@@ -1,6 +1,6 @@
 class Place < ApplicationRecord
-    validates :name,length:{maximum:50}
+    validates :name, presence: true, length: { maximum: 50 }
     
-    belongs_to :user
-    has_many :things
+    belongs_to :user, foreign_key: [:user_id]
+    has_many :things, dependent: :destroy
 end

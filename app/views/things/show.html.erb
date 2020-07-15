@@ -11,6 +11,31 @@
 </p>
 
 <p>
+  <strong>tool1:</strong>
+  <%= @thing.tool1 %>
+</p>
+
+<p>
+  <strong>tool2:</strong>
+  <%= @thing.tool2 %>
+</p>
+
+<p>
+  <strong>tool3:</strong>
+  <%= @thing.tool3 %>
+</p>
+
+<p>
+  <strong>tool4:</strong>
+  <%= @thing.tool4 %>
+</p>
+
+<p>
+  <strong>tool5:</strong>
+  <%= @thing.tool5 %>
+</p>
+
+<p>
   <strong>Clean day:</strong>
   <%= @thing.clean_day %>
 </p>
@@ -25,5 +50,5 @@
   <%= @thing.remarks %>
 </p>
 
-<%= link_to 'Edit', edit_thing_path(@thing) %> |
+<%= link_to 'Edit', things_edit_place_path(@thing) %> |
 <%= link_to 'Back', things_path %>

@@ -4,7 +4,7 @@ class ThingsController < ApplicationController
   # GET /things
   # GET /things.json
   def index
-    @things = Thing.all
+    @things = current_user.things
   end
 
   # GET /things/1
@@ -14,7 +14,9 @@ class ThingsController < ApplicationController
 
   # GET /things/new
   def new
-    @thing = Thing.new
+    @place = current_user.places.find(params[:id])
+    @thing = current_user.places.find(params[:id]).things.build
+    @time = Date.today
   end
 
   # GET /things/1/edit
@@ -24,11 +26,13 @@ class ThingsController < ApplicationController
   # POST /things
   # POST /things.json
   def create
-    @thing = Thing.new(thing_params)
+    #@thing = Thing.new(thing_params)
+    @thing = current_user.places.find(params[:id]).things.build(thing_params)
+   @thing.user_id = current_user.id
 
     respond_to do |format|
       if @thing.save
-        format.html { redirect_to @thing, notice: 'Thing was successfully created.' }
+        format.html { redirect_to place_url, notice: '新しくモノを登録しました' }
         format.json { render :show, status: :created, location: @thing }
       else
         format.html { render :new }
@@ -42,7 +46,7 @@ class ThingsController < ApplicationController
   def update
     respond_to do |format|
       if @thing.update(thing_params)
-        format.html { redirect_to @thing, notice: 'Thing was successfully updated.' }
+        format.html { redirect_to @thing, notice: 'モノを編集しました' }
         format.json { render :show, status: :ok, location: @thing }
       else
         format.html { render :edit }
@@ -56,7 +60,7 @@ class ThingsController < ApplicationController
   def destroy
     @thing.destroy
     respond_to do |format|
-      format.html { redirect_to things_url, notice: 'Thing was successfully destroyed.' }
+      format.html { redirect_to places_url, notice: 'モノを削除しました' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +73,6 @@ class ThingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def thing_params
-      params.require(:thing).permit(:place_id, :name, :clean_day, :clean_frequency, :remarks)
+      params.require(:thing).permit(:place_id, :name, :clean_day, :clean_frequency, :remarks, :tool1, :tool2, :tool3, :tool4, :tool5)
     end
 end
