@@ -1,20 +1,18 @@
 <% if logged_in? %>
+  <h1>本日の掃除するモノ一覧</h1>
   <tbody>
-    <% @things.each do |thing| %>
-      <tr>
-        <td><%= thing.place_id %></td>
-        <td><%= thing.name %></td>
-        <td><%= thing.clean_day %></td>
-        <td><%= thing.clean_frequency %></td>
-        <td><%= thing.remarks %></td>
+
+    <% @things_hurry.each do |t| %>
+    <% thing = today_clean_test(t,@today) %>
+        <td><%= thing&.name %></td>
+        <td><%= thing&.clean_day %></td>
+        <td><%= thing&.clean_frequency %></td>
+        <td><%= thing&.remarks %></td>
     <% end %>
   </tbody>
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+  <h1>ホコリパラメーター</h1>
 
-</p>
+
 
 <% else %>
 <div class="center jumbotron">

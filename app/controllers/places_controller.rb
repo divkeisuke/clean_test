@@ -32,7 +32,6 @@ class PlacesController < ApplicationController
       flash[:success] = '場所を追加しました。'
       redirect_to places_path
     else
-      @microposts = current_user.places
       flash.now[:danger] = '場所の追加に失敗しました。'
       render 'places/index'
     end
